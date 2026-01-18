@@ -105,12 +105,12 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
    */
   const getSortIcon = (field: SortField) => {
     if (sortField !== field) {
-      return <ArrowUpDown className="w-4 h-4 text-gray-500" />
+      return <ArrowUpDown className="w-3 h-3 text-gray-500" />
     }
     return sortDirection === 'asc' ? (
-      <ArrowUp className="w-4 h-4 text-green-500" />
+      <ArrowUp className="w-3 h-3 text-green-500" />
     ) : (
-      <ArrowDown className="w-4 h-4 text-green-500" />
+      <ArrowDown className="w-3 h-3 text-green-500" />
     )
   }
 
@@ -126,79 +126,79 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
         </p>
       </div>
 
-      {/* Table */}
+      {/* Table - Responsive with horizontal scroll */}
       <div className="overflow-x-auto border border-gray-800 rounded-lg">
         <table className="w-full text-sm">
           {/* Header */}
           <thead>
             <tr className="border-b border-gray-800 bg-gray-900/50">
-              <th className="px-4 py-3 text-left">
+              <th className="px-3 py-3 text-left whitespace-nowrap min-w-[70px]">
                 <button
                   onClick={() => handleSort('ticker')}
-                  className="flex items-center gap-2 hover:text-green-500 transition-colors"
+                  className="flex items-center gap-1 hover:text-green-500 transition-colors"
                 >
                   TICKER
                   {getSortIcon('ticker')}
                 </button>
               </th>
-              <th className="px-4 py-3 text-left">
+              <th className="px-3 py-3 text-left whitespace-nowrap min-w-[180px]">
                 <button
                   onClick={() => handleSort('companyName')}
-                  className="flex items-center gap-2 hover:text-green-500 transition-colors"
+                  className="flex items-center gap-1 hover:text-green-500 transition-colors"
                 >
-                  COMPANY
+                  COMPANY NAME
                   {getSortIcon('companyName')}
                 </button>
               </th>
-              <th className="px-4 py-3 text-left">
+              <th className="px-3 py-3 text-left whitespace-nowrap min-w-[100px]">
                 <button
                   onClick={() => handleSort('exchange')}
-                  className="flex items-center gap-2 hover:text-green-500 transition-colors"
+                  className="flex items-center gap-1 hover:text-green-500 transition-colors"
                 >
                   EXCHANGE
                   {getSortIcon('exchange')}
                 </button>
               </th>
-              <th className="px-4 py-3 text-right">
+              <th className="px-3 py-3 text-right whitespace-nowrap min-w-[80px]">
                 <button
                   onClick={() => handleSort('price')}
-                  className="flex items-center justify-end gap-2 hover:text-green-500 transition-colors ml-auto"
+                  className="flex items-center justify-end gap-1 hover:text-green-500 transition-colors ml-auto"
                 >
                   PRICE
                   {getSortIcon('price')}
                 </button>
               </th>
-              <th className="px-4 py-3 text-right">
+              <th className="px-3 py-3 text-right whitespace-nowrap min-w-[90px]">
                 <button
                   onClick={() => handleSort('dayGain')}
-                  className="flex items-center justify-end gap-2 hover:text-green-500 transition-colors ml-auto"
+                  className="flex items-center justify-end gap-1 hover:text-green-500 transition-colors ml-auto"
                 >
                   GAIN %
                   {getSortIcon('dayGain')}
                 </button>
               </th>
-              <th className="px-4 py-3 text-right">
+              <th className="px-3 py-3 text-right whitespace-nowrap min-w-[80px]">
                 <button
                   onClick={() => handleSort('volume')}
-                  className="flex items-center justify-end gap-2 hover:text-green-500 transition-colors ml-auto"
+                  className="flex items-center justify-end gap-1 hover:text-green-500 transition-colors ml-auto"
                 >
                   VOL
                   {getSortIcon('volume')}
                 </button>
               </th>
-              <th className="px-4 py-3 text-right">
+              <th className="px-3 py-3 text-right whitespace-nowrap min-w-[80px]">
                 <button
                   onClick={() => handleSort('relativeVolume')}
-                  className="flex items-center justify-end gap-2 hover:text-green-500 transition-colors ml-auto"
+                  className="flex items-center justify-end gap-1 hover:text-green-500 transition-colors ml-auto"
                 >
                   REL VOL
                   {getSortIcon('relativeVolume')}
                 </button>
               </th>
-              <th className="px-4 py-3 text-right">
+              <th className="px-3 py-3 text-right whitespace-nowrap min-w-[80px]">
                 <button
                   onClick={() => handleSort('float')}
-                  className="flex items-center justify-end gap-2 hover:text-green-500 transition-colors ml-auto"
+                  className="flex items-center justify-end gap-1 hover:text-green-500 transition-colors ml-auto"
                 >
                   FLOAT
                   {getSortIcon('float')}
@@ -224,44 +224,48 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
                     className="border-b border-gray-800 hover:bg-gray-900/50 transition-colors"
                   >
                     {/* Ticker */}
-                    <td className="px-4 py-3 font-semibold text-white">
+                    <td className="px-3 py-3 font-semibold text-white whitespace-nowrap">
                       {stock.ticker}
                     </td>
 
-                    {/* Company Name */}
-                    <td className="px-4 py-3 text-gray-300 text-xs">
+                    {/* Company Name - Full width visible */}
+                    <td className="px-3 py-3 text-gray-300 text-sm whitespace-nowrap overflow-hidden text-ellipsis">
                       {stock.companyName}
                     </td>
 
-                    {/* Exchange */}
-                    <td className="px-4 py-3">
-                      <span className="inline-block px-2 py-1 bg-gray-800 text-gray-300 rounded text-xs font-semibold">
+                    {/* Exchange - Badge style */}
+                    <td className="px-3 py-3 whitespace-nowrap">
+                      <span className={`inline-block px-3 py-1 rounded text-xs font-bold ${
+                        stock.exchange === 'NASDAQ'
+                          ? 'bg-blue-900/50 text-blue-300 border border-blue-700'
+                          : 'bg-purple-900/50 text-purple-300 border border-purple-700'
+                      }`}>
                         {stock.exchange}
                       </span>
                     </td>
 
                     {/* Price */}
-                    <td className="px-4 py-3 text-right text-gray-300">
+                    <td className="px-3 py-3 text-right text-gray-300 whitespace-nowrap">
                       ${stock.price.toFixed(2)}
                     </td>
 
                     {/* Gain % - Green for positive */}
-                    <td className="px-4 py-3 text-right font-semibold text-green-500">
+                    <td className="px-3 py-3 text-right font-semibold text-green-500 whitespace-nowrap">
                       +{totalGain.toFixed(2)}%
                     </td>
 
                     {/* Volume */}
-                    <td className="px-4 py-3 text-right text-gray-300">
+                    <td className="px-3 py-3 text-right text-gray-300 whitespace-nowrap">
                       {formatNumber(stock.volume)}
                     </td>
 
                     {/* Relative Volume */}
-                    <td className="px-4 py-3 text-right text-gray-300">
+                    <td className="px-3 py-3 text-right text-gray-300 whitespace-nowrap">
                       {stock.relativeVolume.toFixed(2)}x
                     </td>
 
                     {/* Float */}
-                    <td className="px-4 py-3 text-right text-gray-300">
+                    <td className="px-3 py-3 text-right text-gray-300 whitespace-nowrap">
                       {formatNumber(stock.float)}
                     </td>
                   </tr>
