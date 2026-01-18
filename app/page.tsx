@@ -1,10 +1,10 @@
 /**
  * Day Trading Scanner - Main Page
- * Displays:
- * - Live market data header with current time
- * - Small cap gauge showing percentage of stocks meeting criteria
- * - Active scan criteria display
- * - Top gainers table with sortable columns
+ * New layout:
+ * - Header with live time
+ * - Small Cap Gauge (full width)
+ * - Top Gainers Table (full width)
+ * - Active Scan Criteria (full width)
  */
 
 'use client'
@@ -24,36 +24,36 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-black text-white">
       {/* Container */}
-      <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
+      <div className="w-full px-4 py-8 md:py-12">
         {/* Header with live time */}
         <Header lastUpdate={scanResults.timestamp} />
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-          {/* Left Column - Gauge and Criteria */}
-          <div className="lg:col-span-1 space-y-8">
-            {/* Gauge Chart */}
-            <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 flex flex-col items-center">
-              <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-6">
-                Small Cap Gauge
-              </h2>
+        {/* Small Cap Gauge - Full Width */}
+        <div className="w-full mb-8">
+          <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-6">
+            <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-6 text-center">
+              Small Cap Gauge
+            </h2>
+            <div className="flex justify-center">
               <GaugeChart
                 percentage={gaugePercentage}
                 label="Criteria Met"
               />
             </div>
-
-            {/* Criteria Display */}
-            <CriteriaDisplay criteria={scanResults.criteria} />
           </div>
+        </div>
 
-          {/* Right Column - Stocks Table */}
-          <div className="lg:col-span-2">
-            <StocksTable
-              stocks={scanResults.stocks}
-              title={`TOP GAINERS TODAY (${scanResults.totalMatching} STOCKS)`}
-            />
-          </div>
+        {/* Stocks Table - Full Width */}
+        <div className="w-full mb-8">
+          <StocksTable
+            stocks={scanResults.stocks}
+            title={`TOP GAINERS TODAY (${scanResults.totalMatching} STOCKS)`}
+          />
+        </div>
+
+        {/* Active Scan Criteria - Full Width */}
+        <div className="w-full mb-8">
+          <CriteriaDisplay criteria={scanResults.criteria} />
         </div>
 
         {/* Footer Info */}

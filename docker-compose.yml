@@ -7,10 +7,10 @@ services:
       dockerfile: Dockerfile
     container_name: day-trading-scanner
     ports:
-      - "3050:3000"
+      - "3100:3000"
     environment:
       - NODE_ENV=production
-      - NEXT_PUBLIC_APP_URL=http://localhost:3050
+      - NEXT_PUBLIC_APP_URL=http://localhost:3100
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
