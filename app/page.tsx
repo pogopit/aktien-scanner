@@ -1,103 +1,110 @@
-import Image from "next/image";
+/**
+ * Day Trading Scanner - Main Page
+ * Displays:
+ * - Live market data header with current time
+ * - Small cap gauge showing percentage of stocks meeting criteria
+ * - Active scan criteria display
+ * - Top gainers table with sortable columns
+ */
+
+'use client'
+
+import React from 'react'
+import { Header } from '@/components/Header'
+import { GaugeChart } from '@/components/GaugeChart'
+import { StocksTable } from '@/components/StocksTable'
+import { CriteriaDisplay } from '@/components/CriteriaDisplay'
+import { getScanResults, calculateGaugePercentage } from '@/lib/mockData'
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  // Get scan results with filtered stocks
+  const scanResults = getScanResults()
+  const gaugePercentage = calculateGaugePercentage()
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  return (
+    <main className="min-h-screen bg-black text-white">
+      {/* Container */}
+      <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
+        {/* Header with live time */}
+        <Header lastUpdate={scanResults.timestamp} />
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+          {/* Left Column - Gauge and Criteria */}
+          <div className="lg:col-span-1 space-y-8">
+            {/* Gauge Chart */}
+            <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 flex flex-col items-center">
+              <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-6">
+                Small Cap Gauge
+              </h2>
+              <GaugeChart
+                percentage={gaugePercentage}
+                label="Criteria Met"
+              />
+            </div>
+
+            {/* Criteria Display */}
+            <CriteriaDisplay criteria={scanResults.criteria} />
+          </div>
+
+          {/* Right Column - Stocks Table */}
+          <div className="lg:col-span-2">
+            <StocksTable
+              stocks={scanResults.stocks}
+              title={`TOP GAINERS TODAY (${scanResults.totalMatching} STOCKS)`}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+
+        {/* Footer Info */}
+        <div className="border-t border-gray-800 pt-6 mt-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+            {/* Total Stocks */}
+            <div>
+              <p className="text-gray-500 uppercase text-xs tracking-wider">
+                Total Stocks Scanned
+              </p>
+              <p className="text-2xl font-bold text-white mt-1">
+                {scanResults.stocks.length}
+              </p>
+            </div>
+
+            {/* Matching Criteria */}
+            <div>
+              <p className="text-gray-500 uppercase text-xs tracking-wider">
+                Matching Criteria
+              </p>
+              <p className="text-2xl font-bold text-green-500 mt-1">
+                {scanResults.totalMatching}
+              </p>
+            </div>
+
+            {/* Success Rate */}
+            <div>
+              <p className="text-gray-500 uppercase text-xs tracking-wider">
+                Success Rate
+              </p>
+              <p className="text-2xl font-bold text-white mt-1">
+                {((scanResults.totalMatching / scanResults.stocks.length) * 100).toFixed(1)}%
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Info Section */}
+        <div className="mt-12 p-6 bg-gray-900/50 border border-gray-800 rounded-lg">
+          <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">
+            About This Scanner
+          </h3>
+          <p className="text-sm text-gray-400 leading-relaxed">
+            This day trading scanner filters stocks based on specific criteria designed to identify
+            potential trading opportunities. All displayed stocks meet the following requirements:
+            price between $1-$20, minimum 10% daily gain (including pre-market), maximum ±10% change
+            over 7 days for consolidation, relative volume at least 5x the average, and minimum
+            100,000 shares daily volume.
+          </p>
+        </div>
+      </div>
+    </main>
+  )
 }

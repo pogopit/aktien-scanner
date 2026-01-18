@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  day-trading-scanner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: day-trading-scanner
+    ports:
+      - "3050:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_APP_URL=http://localhost:3050
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    volumes:
+      # Optional: Mount for persistent logs
+      - ./logs:/app/logs
+    networks:
+      - trading-network
+
+networks:
+  trading-network:
+    driver: bridge
