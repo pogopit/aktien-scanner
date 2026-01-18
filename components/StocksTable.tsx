@@ -1,7 +1,7 @@
 /**
  * StocksTable Component
  * Displays filtered stocks in a sortable, responsive table
- * Shows: Ticker, Company Name, Exchange, Price, Day Gain %, Volume, Float
+ * Shows: Ticker, Company Name, Exchange, Price, Day Gain %, Volume, Rel Vol, Float
  */
 
 'use client'
@@ -22,9 +22,6 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
   const [sortField, setSortField] = useState<SortField>('dayGain')
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc')
 
-  /**
-   * Handle column header click to sort
-   */
   const handleSort = (field: SortField) => {
     if (sortField === field) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
@@ -34,9 +31,6 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
     }
   }
 
-  /**
-   * Sort stocks based on current sort field and direction
-   */
   const sortedStocks = [...stocks].sort((a, b) => {
     let aValue: number | string = 0
     let bValue: number | string = 0
@@ -85,9 +79,6 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
     return sortDirection === 'asc' ? (aValue as number) - (bValue as number) : (bValue as number) - (aValue as number)
   })
 
-  /**
-   * Format large numbers for display
-   */
   const formatNumber = (num: number): string => {
     if (num >= 1000000) {
       return (num / 1000000).toFixed(1) + 'M'
@@ -98,9 +89,6 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
     return num.toFixed(0)
   }
 
-  /**
-   * Get sort icon for column header
-   */
   const getSortIcon = (field: SortField) => {
     if (sortField !== field) {
       return <ArrowUpDown className="w-3 h-3 text-gray-500" />
@@ -124,13 +112,13 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
         </p>
       </div>
 
-      {/* Table Container with horizontal scroll */}
-      <div className="w-full overflow-x-auto border border-gray-800 rounded-lg">
-        <table className="w-full text-xs md:text-sm">
+      {/* Table Container */}
+      <div className="w-full overflow-x-auto border border-gray-800 rounded-lg bg-gray-950">
+        <table className="w-full text-xs">
           {/* Header */}
           <thead>
-            <tr className="border-b border-gray-800 bg-gray-900/50 sticky top-0">
-              <th className="px-2 md:px-3 py-2 text-left font-semibold text-gray-300 whitespace-nowrap">
+            <tr className="border-b border-gray-800 bg-gray-900">
+              <th className="px-2 py-2 text-left font-semibold text-gray-300">
                 <button
                   onClick={() => handleSort('ticker')}
                   className="flex items-center gap-1 hover:text-green-500 transition-colors"
@@ -139,7 +127,7 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
                   {getSortIcon('ticker')}
                 </button>
               </th>
-              <th className="px-2 md:px-3 py-2 text-left font-semibold text-gray-300 whitespace-nowrap min-w-[200px]">
+              <th className="px-2 py-2 text-left font-semibold text-gray-300 min-w-[150px]">
                 <button
                   onClick={() => handleSort('companyName')}
                   className="flex items-center gap-1 hover:text-green-500 transition-colors"
@@ -148,7 +136,7 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
                   {getSortIcon('companyName')}
                 </button>
               </th>
-              <th className="px-2 md:px-3 py-2 text-left font-semibold text-gray-300 whitespace-nowrap">
+              <th className="px-2 py-2 text-left font-semibold text-gray-300">
                 <button
                   onClick={() => handleSort('exchange')}
                   className="flex items-center gap-1 hover:text-green-500 transition-colors"
@@ -157,7 +145,7 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
                   {getSortIcon('exchange')}
                 </button>
               </th>
-              <th className="px-2 md:px-3 py-2 text-right font-semibold text-gray-300 whitespace-nowrap">
+              <th className="px-2 py-2 text-right font-semibold text-gray-300">
                 <button
                   onClick={() => handleSort('price')}
                   className="flex items-center justify-end gap-1 hover:text-green-500 transition-colors ml-auto"
@@ -166,7 +154,7 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
                   {getSortIcon('price')}
                 </button>
               </th>
-              <th className="px-2 md:px-3 py-2 text-right font-semibold text-gray-300 whitespace-nowrap">
+              <th className="px-2 py-2 text-right font-semibold text-gray-300">
                 <button
                   onClick={() => handleSort('dayGain')}
                   className="flex items-center justify-end gap-1 hover:text-green-500 transition-colors ml-auto"
@@ -175,7 +163,7 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
                   {getSortIcon('dayGain')}
                 </button>
               </th>
-              <th className="px-2 md:px-3 py-2 text-right font-semibold text-gray-300 whitespace-nowrap">
+              <th className="px-2 py-2 text-right font-semibold text-gray-300">
                 <button
                   onClick={() => handleSort('volume')}
                   className="flex items-center justify-end gap-1 hover:text-green-500 transition-colors ml-auto"
@@ -184,7 +172,7 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
                   {getSortIcon('volume')}
                 </button>
               </th>
-              <th className="px-2 md:px-3 py-2 text-right font-semibold text-gray-300 whitespace-nowrap">
+              <th className="px-2 py-2 text-right font-semibold text-gray-300">
                 <button
                   onClick={() => handleSort('relativeVolume')}
                   className="flex items-center justify-end gap-1 hover:text-green-500 transition-colors ml-auto"
@@ -193,7 +181,7 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
                   {getSortIcon('relativeVolume')}
                 </button>
               </th>
-              <th className="px-2 md:px-3 py-2 text-right font-semibold text-gray-300 whitespace-nowrap">
+              <th className="px-2 py-2 text-right font-semibold text-gray-300">
                 <button
                   onClick={() => handleSort('float')}
                   className="flex items-center justify-end gap-1 hover:text-green-500 transition-colors ml-auto"
@@ -222,50 +210,48 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
                     className="border-b border-gray-800 hover:bg-gray-900/50 transition-colors"
                   >
                     {/* Ticker */}
-                    <td className="px-2 md:px-3 py-2 font-bold text-white whitespace-nowrap">
+                    <td className="px-2 py-2 font-bold text-white">
                       {stock.ticker}
                     </td>
 
-                    {/* Company Name - FULLY VISIBLE */}
-                    <td className="px-2 md:px-3 py-2 text-gray-300 whitespace-normal break-words min-w-[200px]">
-                      <div className="text-xs md:text-sm font-medium">
-                        {stock.companyName}
-                      </div>
+                    {/* Company Name */}
+                    <td className="px-2 py-2 text-gray-300 text-xs min-w-[150px]">
+                      {stock.companyName}
                     </td>
 
-                    {/* Exchange - Badge */}
-                    <td className="px-2 md:px-3 py-2 whitespace-nowrap">
-                      <span className={`inline-block px-2 py-1 rounded text-xs font-bold ${
+                    {/* Exchange */}
+                    <td className="px-2 py-2">
+                      <span className={`inline-block px-2 py-0.5 rounded text-xs font-bold ${
                         stock.exchange === 'NASDAQ'
-                          ? 'bg-blue-900/60 text-blue-200 border border-blue-600'
-                          : 'bg-purple-900/60 text-purple-200 border border-purple-600'
+                          ? 'bg-blue-900/70 text-blue-200'
+                          : 'bg-purple-900/70 text-purple-200'
                       }`}>
                         {stock.exchange}
                       </span>
                     </td>
 
                     {/* Price */}
-                    <td className="px-2 md:px-3 py-2 text-right text-gray-300 whitespace-nowrap">
+                    <td className="px-2 py-2 text-right text-gray-300">
                       ${stock.price.toFixed(2)}
                     </td>
 
                     {/* Gain % */}
-                    <td className="px-2 md:px-3 py-2 text-right font-bold text-green-400 whitespace-nowrap">
+                    <td className="px-2 py-2 text-right font-bold text-green-400">
                       +{totalGain.toFixed(2)}%
                     </td>
 
                     {/* Volume */}
-                    <td className="px-2 md:px-3 py-2 text-right text-gray-300 whitespace-nowrap">
+                    <td className="px-2 py-2 text-right text-gray-300">
                       {formatNumber(stock.volume)}
                     </td>
 
                     {/* Relative Volume */}
-                    <td className="px-2 md:px-3 py-2 text-right text-gray-300 whitespace-nowrap">
+                    <td className="px-2 py-2 text-right text-gray-300">
                       {stock.relativeVolume.toFixed(2)}x
                     </td>
 
                     {/* Float */}
-                    <td className="px-2 md:px-3 py-2 text-right text-gray-300 whitespace-nowrap">
+                    <td className="px-2 py-2 text-right text-gray-300">
                       {formatNumber(stock.float)}
                     </td>
                   </tr>
