@@ -14,14 +14,15 @@ interface HeaderProps {
 
 export function Header({ lastUpdate }: HeaderProps) {
   const [currentTime, setCurrentTime] = useState<string>('')
-  const [mounted, setMounted] = useState(false)
+  const [isClient, setIsClient] = useState(false)
 
   /**
    * Update current time every second
-   * Format: HH:MM:SS
+   * Only run on client side to avoid hydration mismatch
    */
   useEffect(() => {
-    setMounted(true)
+    setIsClient(true)
+    
     const updateTime = () => {
       const now = new Date()
       const hours = String(now.getHours()).padStart(2, '0')
@@ -55,9 +56,13 @@ export function Header({ lastUpdate }: HeaderProps) {
       {/* Time and Info */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          {mounted && (
+          {isClient ? (
             <div className="text-4xl md:text-5xl font-mono font-bold text-green-500">
-              {currentTime}
+              {currentTime || '00:00:00'}
+            </div>
+          ) : (
+            <div className="text-4xl md:text-5xl font-mono font-bold text-green-500">
+              --:--:--
             </div>
           )}
           <p className="text-xs text-gray-500 mt-2">
