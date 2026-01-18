@@ -18,9 +18,6 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
-    volumes:
-      # Optional: Mount for persistent logs
-      - ./logs:/app/logs
     networks:
       - trading-network
 
