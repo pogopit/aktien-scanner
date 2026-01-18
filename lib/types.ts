@@ -4,6 +4,8 @@
 
 export interface Stock {
   ticker: string
+  companyName: string // Neuer Feld: Unternehmensname
+  exchange: string // Neuer Feld: Börse (NASDAQ, NYSE, etc.)
   price: number
   dayGain: number // Percentage gain today (including pre-market)
   volume: number // Total volume in shares

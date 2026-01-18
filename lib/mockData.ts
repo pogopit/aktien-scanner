@@ -18,10 +18,13 @@ export const DEFAULT_CRITERIA: ScanCriteria = {
 /**
  * Mock stock data that matches the scan criteria
  * All stocks meet the filtering requirements
+ * Includes company name and exchange information
  */
 export const MOCK_STOCKS: Stock[] = [
   {
     ticker: 'VERO',
+    companyName: 'Veritiv Corporation',
+    exchange: 'NASDAQ',
     price: 6.72,
     dayGain: 369.93,
     volume: 308900000,
@@ -35,6 +38,8 @@ export const MOCK_STOCKS: Stock[] = [
   },
   {
     ticker: 'IVF',
+    companyName: 'Invesco Financial',
+    exchange: 'NASDAQ',
     price: 1.64,
     dayGain: 102.09,
     volume: 61500000,
@@ -48,6 +53,8 @@ export const MOCK_STOCKS: Stock[] = [
   },
   {
     ticker: 'JFBR',
+    companyName: 'Jefferies Financial Group',
+    exchange: 'NYSE',
     price: 1.12,
     dayGain: 100.72,
     volume: 235100000,
@@ -61,6 +68,8 @@ export const MOCK_STOCKS: Stock[] = [
   },
   {
     ticker: 'JAGX',
+    companyName: 'Jaguar Genomics Inc',
+    exchange: 'NASDAQ',
     price: 1.23,
     dayGain: 60.89,
     volume: 160400000,
@@ -74,6 +83,8 @@ export const MOCK_STOCKS: Stock[] = [
   },
   {
     ticker: 'TNMG',
+    companyName: 'Tandem Diabetes Care',
+    exchange: 'NASDAQ',
     price: 3.68,
     dayGain: 55.93,
     volume: 27800000,
@@ -87,6 +98,8 @@ export const MOCK_STOCKS: Stock[] = [
   },
   {
     ticker: 'NIVF',
+    companyName: 'Nuvista Energy Ltd',
+    exchange: 'NYSE',
     price: 0.73,
     dayGain: 42.64,
     volume: 18600000,
@@ -100,6 +113,8 @@ export const MOCK_STOCKS: Stock[] = [
   },
   {
     ticker: 'BIYA',
+    companyName: 'Bilibili Inc',
+    exchange: 'NASDAQ',
     price: 6.41,
     dayGain: 42.13,
     volume: 20300000,
@@ -113,6 +128,8 @@ export const MOCK_STOCKS: Stock[] = [
   },
   {
     ticker: 'LCFY',
+    companyName: 'Lucify Technologies',
+    exchange: 'NASDAQ',
     price: 4.43,
     dayGain: 41.53,
     volume: 42700000,
@@ -126,6 +143,8 @@ export const MOCK_STOCKS: Stock[] = [
   },
   {
     ticker: 'IBRX',
+    companyName: 'Inhibrx Inc',
+    exchange: 'NASDAQ',
     price: 5.53,
     dayGain: 39.87,
     volume: 182300000,
@@ -139,6 +158,8 @@ export const MOCK_STOCKS: Stock[] = [
   },
   {
     ticker: 'PRFX',
+    companyName: 'Perficient Inc',
+    exchange: 'NASDAQ',
     price: 1.15,
     dayGain: 39.79,
     volume: 64200000,

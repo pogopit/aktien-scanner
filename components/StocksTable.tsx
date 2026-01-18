@@ -1,7 +1,7 @@
 /**
  * StocksTable Component
  * Displays filtered stocks in a sortable, responsive table
- * Shows: Ticker, Price, Day Gain %, Volume, Float, Last HOD
+ * Shows: Ticker, Company Name, Exchange, Price, Day Gain %, Volume, Float, Last HOD
  */
 
 'use client'
@@ -15,7 +15,7 @@ interface StocksTableProps {
   title?: string
 }
 
-type SortField = 'ticker' | 'price' | 'dayGain' | 'volume' | 'float' | 'relativeVolume'
+type SortField = 'ticker' | 'companyName' | 'exchange' | 'price' | 'dayGain' | 'volume' | 'float' | 'relativeVolume'
 type SortDirection = 'asc' | 'desc'
 
 export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTableProps) {
@@ -46,6 +46,14 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
       case 'ticker':
         aValue = a.ticker
         bValue = b.ticker
+        break
+      case 'companyName':
+        aValue = a.companyName
+        bValue = b.companyName
+        break
+      case 'exchange':
+        aValue = a.exchange
+        bValue = b.exchange
         break
       case 'price':
         aValue = a.price
@@ -133,6 +141,24 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
                   {getSortIcon('ticker')}
                 </button>
               </th>
+              <th className="px-4 py-3 text-left">
+                <button
+                  onClick={() => handleSort('companyName')}
+                  className="flex items-center gap-2 hover:text-green-500 transition-colors"
+                >
+                  COMPANY
+                  {getSortIcon('companyName')}
+                </button>
+              </th>
+              <th className="px-4 py-3 text-left">
+                <button
+                  onClick={() => handleSort('exchange')}
+                  className="flex items-center gap-2 hover:text-green-500 transition-colors"
+                >
+                  EXCHANGE
+                  {getSortIcon('exchange')}
+                </button>
+              </th>
               <th className="px-4 py-3 text-right">
                 <button
                   onClick={() => handleSort('price')}
@@ -185,7 +211,7 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
           <tbody>
             {sortedStocks.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-4 py-8 text-center text-gray-500">
+                <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
                   No stocks matching criteria
                 </td>
               </tr>
@@ -200,6 +226,18 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
                     {/* Ticker */}
                     <td className="px-4 py-3 font-semibold text-white">
                       {stock.ticker}
+                    </td>
+
+                    {/* Company Name */}
+                    <td className="px-4 py-3 text-gray-300 text-xs">
+                      {stock.companyName}
+                    </td>
+
+                    {/* Exchange */}
+                    <td className="px-4 py-3">
+                      <span className="inline-block px-2 py-1 bg-gray-800 text-gray-300 rounded text-xs font-semibold">
+                        {stock.exchange}
+                      </span>
                     </td>
 
                     {/* Price */}
