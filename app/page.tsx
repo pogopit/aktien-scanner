@@ -1,9 +1,10 @@
 /**
  * Day Trading Scanner - Main Page
- * New layout:
+ * Layout:
  * - Header with live time
  * - Small Cap Gauge (full width)
  * - Top Gainers Table (full width)
+ * - Filter Analysis (Kill-Filters + Scoring)
  * - Active Scan Criteria (full width)
  */
 
@@ -14,6 +15,7 @@ import { Header } from '@/components/Header'
 import { GaugeChart } from '@/components/GaugeChart'
 import { StocksTable } from '@/components/StocksTable'
 import { CriteriaDisplay } from '@/components/CriteriaDisplay'
+import { FilterAnalysis } from '@/components/FilterAnalysis'
 import { getScanResults, calculateGaugePercentage } from '@/lib/mockData'
 
 export default function Home() {
@@ -49,6 +51,11 @@ export default function Home() {
             stocks={scanResults.stocks}
             title={`TOP GAINERS TODAY (${scanResults.totalMatching} STOCKS)`}
           />
+        </div>
+
+        {/* Filter Analysis - Kill-Filters + Scoring */}
+        <div className="w-full mb-8">
+          <FilterAnalysis stocks={scanResults.stocks} />
         </div>
 
         {/* Active Scan Criteria - Full Width */}
