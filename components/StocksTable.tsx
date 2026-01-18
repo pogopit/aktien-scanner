@@ -1,7 +1,7 @@
 /**
  * StocksTable Component
  * Displays filtered stocks in a sortable, responsive table
- * Shows: Ticker, Company Name, Exchange, Price, Day Gain %, Volume, Float, Last HOD
+ * Shows: Ticker, Company Name, Exchange, Price, Day Gain %, Volume, Float
  */
 
 'use client'
@@ -24,7 +24,6 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
 
   /**
    * Handle column header click to sort
-   * Toggle direction if same column clicked, otherwise set new column
    */
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -88,7 +87,6 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
 
   /**
    * Format large numbers for display
-   * 1000000 -> 1.0M, 1000 -> 1.0K
    */
   const formatNumber = (num: number): string => {
     if (num >= 1000000) {
@@ -126,13 +124,13 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
         </p>
       </div>
 
-      {/* Table - Responsive with horizontal scroll */}
-      <div className="overflow-x-auto border border-gray-800 rounded-lg">
-        <table className="w-full text-sm">
+      {/* Table Container with horizontal scroll */}
+      <div className="w-full overflow-x-auto border border-gray-800 rounded-lg">
+        <table className="w-full text-xs md:text-sm">
           {/* Header */}
           <thead>
-            <tr className="border-b border-gray-800 bg-gray-900/50">
-              <th className="px-3 py-3 text-left whitespace-nowrap min-w-[70px]">
+            <tr className="border-b border-gray-800 bg-gray-900/50 sticky top-0">
+              <th className="px-2 md:px-3 py-2 text-left font-semibold text-gray-300 whitespace-nowrap">
                 <button
                   onClick={() => handleSort('ticker')}
                   className="flex items-center gap-1 hover:text-green-500 transition-colors"
@@ -141,25 +139,25 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
                   {getSortIcon('ticker')}
                 </button>
               </th>
-              <th className="px-3 py-3 text-left whitespace-nowrap min-w-[180px]">
+              <th className="px-2 md:px-3 py-2 text-left font-semibold text-gray-300 whitespace-nowrap min-w-[200px]">
                 <button
                   onClick={() => handleSort('companyName')}
                   className="flex items-center gap-1 hover:text-green-500 transition-colors"
                 >
-                  COMPANY NAME
+                  COMPANY
                   {getSortIcon('companyName')}
                 </button>
               </th>
-              <th className="px-3 py-3 text-left whitespace-nowrap min-w-[100px]">
+              <th className="px-2 md:px-3 py-2 text-left font-semibold text-gray-300 whitespace-nowrap">
                 <button
                   onClick={() => handleSort('exchange')}
                   className="flex items-center gap-1 hover:text-green-500 transition-colors"
                 >
-                  EXCHANGE
+                  EXCH
                   {getSortIcon('exchange')}
                 </button>
               </th>
-              <th className="px-3 py-3 text-right whitespace-nowrap min-w-[80px]">
+              <th className="px-2 md:px-3 py-2 text-right font-semibold text-gray-300 whitespace-nowrap">
                 <button
                   onClick={() => handleSort('price')}
                   className="flex items-center justify-end gap-1 hover:text-green-500 transition-colors ml-auto"
@@ -168,7 +166,7 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
                   {getSortIcon('price')}
                 </button>
               </th>
-              <th className="px-3 py-3 text-right whitespace-nowrap min-w-[90px]">
+              <th className="px-2 md:px-3 py-2 text-right font-semibold text-gray-300 whitespace-nowrap">
                 <button
                   onClick={() => handleSort('dayGain')}
                   className="flex items-center justify-end gap-1 hover:text-green-500 transition-colors ml-auto"
@@ -177,7 +175,7 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
                   {getSortIcon('dayGain')}
                 </button>
               </th>
-              <th className="px-3 py-3 text-right whitespace-nowrap min-w-[80px]">
+              <th className="px-2 md:px-3 py-2 text-right font-semibold text-gray-300 whitespace-nowrap">
                 <button
                   onClick={() => handleSort('volume')}
                   className="flex items-center justify-end gap-1 hover:text-green-500 transition-colors ml-auto"
@@ -186,7 +184,7 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
                   {getSortIcon('volume')}
                 </button>
               </th>
-              <th className="px-3 py-3 text-right whitespace-nowrap min-w-[80px]">
+              <th className="px-2 md:px-3 py-2 text-right font-semibold text-gray-300 whitespace-nowrap">
                 <button
                   onClick={() => handleSort('relativeVolume')}
                   className="flex items-center justify-end gap-1 hover:text-green-500 transition-colors ml-auto"
@@ -195,7 +193,7 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
                   {getSortIcon('relativeVolume')}
                 </button>
               </th>
-              <th className="px-3 py-3 text-right whitespace-nowrap min-w-[80px]">
+              <th className="px-2 md:px-3 py-2 text-right font-semibold text-gray-300 whitespace-nowrap">
                 <button
                   onClick={() => handleSort('float')}
                   className="flex items-center justify-end gap-1 hover:text-green-500 transition-colors ml-auto"
@@ -224,48 +222,50 @@ export function StocksTable({ stocks, title = 'TOP GAINERS TODAY' }: StocksTable
                     className="border-b border-gray-800 hover:bg-gray-900/50 transition-colors"
                   >
                     {/* Ticker */}
-                    <td className="px-3 py-3 font-semibold text-white whitespace-nowrap">
+                    <td className="px-2 md:px-3 py-2 font-bold text-white whitespace-nowrap">
                       {stock.ticker}
                     </td>
 
-                    {/* Company Name - Full width visible */}
-                    <td className="px-3 py-3 text-gray-300 text-sm whitespace-nowrap overflow-hidden text-ellipsis">
-                      {stock.companyName}
+                    {/* Company Name - FULLY VISIBLE */}
+                    <td className="px-2 md:px-3 py-2 text-gray-300 whitespace-normal break-words min-w-[200px]">
+                      <div className="text-xs md:text-sm font-medium">
+                        {stock.companyName}
+                      </div>
                     </td>
 
-                    {/* Exchange - Badge style */}
-                    <td className="px-3 py-3 whitespace-nowrap">
-                      <span className={`inline-block px-3 py-1 rounded text-xs font-bold ${
+                    {/* Exchange - Badge */}
+                    <td className="px-2 md:px-3 py-2 whitespace-nowrap">
+                      <span className={`inline-block px-2 py-1 rounded text-xs font-bold ${
                         stock.exchange === 'NASDAQ'
-                          ? 'bg-blue-900/50 text-blue-300 border border-blue-700'
-                          : 'bg-purple-900/50 text-purple-300 border border-purple-700'
+                          ? 'bg-blue-900/60 text-blue-200 border border-blue-600'
+                          : 'bg-purple-900/60 text-purple-200 border border-purple-600'
                       }`}>
                         {stock.exchange}
                       </span>
                     </td>
 
                     {/* Price */}
-                    <td className="px-3 py-3 text-right text-gray-300 whitespace-nowrap">
+                    <td className="px-2 md:px-3 py-2 text-right text-gray-300 whitespace-nowrap">
                       ${stock.price.toFixed(2)}
                     </td>
 
-                    {/* Gain % - Green for positive */}
-                    <td className="px-3 py-3 text-right font-semibold text-green-500 whitespace-nowrap">
+                    {/* Gain % */}
+                    <td className="px-2 md:px-3 py-2 text-right font-bold text-green-400 whitespace-nowrap">
                       +{totalGain.toFixed(2)}%
                     </td>
 
                     {/* Volume */}
-                    <td className="px-3 py-3 text-right text-gray-300 whitespace-nowrap">
+                    <td className="px-2 md:px-3 py-2 text-right text-gray-300 whitespace-nowrap">
                       {formatNumber(stock.volume)}
                     </td>
 
                     {/* Relative Volume */}
-                    <td className="px-3 py-3 text-right text-gray-300 whitespace-nowrap">
+                    <td className="px-2 md:px-3 py-2 text-right text-gray-300 whitespace-nowrap">
                       {stock.relativeVolume.toFixed(2)}x
                     </td>
 
                     {/* Float */}
-                    <td className="px-3 py-3 text-right text-gray-300 whitespace-nowrap">
+                    <td className="px-2 md:px-3 py-2 text-right text-gray-300 whitespace-nowrap">
                       {formatNumber(stock.float)}
                     </td>
                   </tr>
