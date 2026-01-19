@@ -35,7 +35,26 @@ interface FinnhubQuote {
 }
 
 /**
+ * Company Profile Response
+ */
+interface CompanyProfile {
+  name?: string
+  exchange?: string
+  shareOutstanding?: number
+  [key: string]: unknown
+}
+
+/**
+ * Intraday Data Response
+ */
+interface IntradayData {
+  v?: number[]
+  [key: string]: unknown
+}
+
+/**
  * Fetch real-time quote from Finnhub
+ * Requires IB Gateway/TWS running on localhost:7497
  * 
  * @param ticker - Stock ticker symbol
  * @returns Stock data or null if fetch fails
@@ -88,7 +107,7 @@ export async function fetchStockFromFinnhub(ticker: string): Promise<Stock | nul
  * Fetch company profile from Finnhub
  * Includes company name, exchange, and other details
  */
-export async function fetchCompanyProfile(ticker: string): Promise<any> {
+export async function fetchCompanyProfile(ticker: string): Promise<CompanyProfile | null> {
   try {
     if (!FINNHUB_CONFIG.apiKey) {
       return null
@@ -101,7 +120,7 @@ export async function fetchCompanyProfile(ticker: string): Promise<any> {
       return null
     }
 
-    return await response.json()
+    return await response.json() as CompanyProfile
   } catch (error) {
     console.error(`Error fetching company profile for ${ticker}:`, error)
     return null
@@ -111,7 +130,7 @@ export async function fetchCompanyProfile(ticker: string): Promise<any> {
 /**
  * Fetch intraday candles (includes volume data)
  */
-export async function fetchIntradayData(ticker: string): Promise<any> {
+export async function fetchIntradayData(ticker: string): Promise<IntradayData | null> {
   try {
     if (!FINNHUB_CONFIG.apiKey) {
       return null
@@ -124,7 +143,7 @@ export async function fetchIntradayData(ticker: string): Promise<any> {
       return null
     }
 
-    return await response.json()
+    return await response.json() as IntradayData
   } catch (error) {
     console.error(`Error fetching intraday data for ${ticker}:`, error)
     return null
